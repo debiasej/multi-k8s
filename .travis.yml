@@ -6,7 +6,7 @@ before_install:
   - docker build -t debiasej/multi-react-test-learning -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run debiasej//multi-react-test-learning npm test -- --coverage
+  - docker run debiasej/multi-react-test-learning npm test -- --coverage
 
 after_success:
   - docker build -t debiasej/multi-client-learning ./client
@@ -14,7 +14,7 @@ after_success:
   - docker build -t debiasej/multi-server-learning ./server
   - docker build -t debiasej/multi-worker-learning ./worker
   # Log in to the docker CLI
-  - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push debiasej/multi-client-learning
   - docker push debiasej/multi-nginx-learning
